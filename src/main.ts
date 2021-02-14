@@ -14,7 +14,7 @@ export async function parseInputs(): Promise<IActionInputs> {
   try {
     const inputs: IActionInputs = Object.freeze({
       strategyIniFile: core.getInput('strategy-ini-file'),
-      level: core.getInput('level'),
+      level: core.getInput('level').toUpperCase(),
       requirementsTxtFile: core.getInput('requirements-txt-file'),
       reportingTxtFile: core.getInput('reporting-txt-file'),
       noDeps: core.getInput('no-deps'),

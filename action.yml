@@ -1,6 +1,6 @@
 name: py-licensed
 author: Anderson Banihirwe
-description: Verify the licenses of dependencies of a Python package and report issues.
+description: Check license of Python packages and their dependencies.
 inputs:
   strategy-ini-file:
     description: Path to strategy ini file or pyproject.toml file to use.
@@ -11,7 +11,8 @@ inputs:
     default: STANDARD
   requirements-txt-file:
     description: Path to requirements.txt file to use.
-    required: true
+    required: false
+    default: ./requirements.txt
   reporting-txt-file:
     description: Path to a reporting.txt file to use.
     required: false

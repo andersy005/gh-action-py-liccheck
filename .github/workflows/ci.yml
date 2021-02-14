@@ -29,9 +29,15 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
-      - uses: ./
+      - name: user inputs
+        uses: ./
         with:
           strategy-ini-file: ./examples/my_strategy.ini
           level: STANDARD
           requirements-txt-file: ./examples/requirements.txt
           no-deps: true
+
+      - name: default inputs
+        uses: ./
+        with:
+          strategy-ini-file: ./examples/my_strategy.ini

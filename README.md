@@ -1,3 +1,3 @@
 # gh-action-py-liccheck
 
-A GitHub Action to verify the licenses of dependencies of a Python package and report issues.
+A GitHub Action tocCheck license of Python packages and their dependencies.
