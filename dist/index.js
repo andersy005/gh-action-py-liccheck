@@ -89,7 +89,7 @@ function run() {
             if (inputs.noDeps === 'true') {
                 commandOptions.push('--no-deps');
             }
-            yield core.group('Verifying the licenses of dependencies...', () => __awaiter(this, void 0, void 0, function* () {
+            yield core.group('Running the license checker...', () => __awaiter(this, void 0, void 0, function* () {
                 yield exec.exec(`"${liccheckPath}"`, commandOptions);
             }));
         }

@@ -65,7 +65,7 @@ async function run(): Promise<void> {
       commandOptions.push('--no-deps')
     }
 
-    await core.group('Verifying the licenses of dependencies...', async () => {
+    await core.group('Running the license checker...', async () => {
       await exec.exec(`"${liccheckPath}"`, commandOptions)
     })
   } catch (error) {
