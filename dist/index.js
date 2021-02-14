@@ -36,54 +36,55 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.parseInputs = void 0;
 const core = __importStar(__webpack_require__(186));
-const wait_1 = __webpack_require__(817);
+function parseInputs() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const inputs = Object.freeze({
+                strategyIniFile: core.getInput('strategy-ini-file'),
+                level: core.getInput('level'),
+                requirementsTxtFile: core.getInput('requirements-txt-file'),
+                reportingTxtFile: core.getInput('reporting-txt-file'),
+                noDeps: core.getInput('no-deps'),
+            });
+            return inputs;
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
+exports.parseInputs = parseInputs;
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const ms = core.getInput('milliseconds');
-            core.debug(`Waiting ${ms} milliseconds ...`); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-            core.debug(new Date().toTimeString());
-            yield wait_1.wait(parseInt(ms, 10));
-            core.debug(new Date().toTimeString());
-            core.setOutput('time', new Date().toTimeString());
+            const inputs = yield parseInputs();
+            core.debug(`Inputs: ${inputs}`); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
         }
         catch (error) {
             core.setFailed(error.message);
         }
     });
 }
+// async function test(): Promise<void> {
+//   try {
+//     const inputs: IActionInputs = await parseInputs()
+//     core.debug(`Inputs: ${inputs}`)
+//     // await exec.exec('liccheck', [
+//     //   '-s',
+//     //   'examples/my_strategy.ini',
+//     //   '-r',
+//     //   'examples/requirements.txt',
+//     //   '-l',
+//     //   'PARANOID',
+//     // ])
+//   } catch (error) {
+//     core.setFailed(error.message)
+//   }
+// }
+// test()
 run();
-
-
-/***/ }),
-
-/***/ 817:
-/***/ (function(__unused_webpack_module, exports) {
-
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.wait = void 0;
-function wait(milliseconds) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return new Promise((resolve) => {
-            if (isNaN(milliseconds)) {
-                throw new Error('milliseconds not a number');
-            }
-            setTimeout(() => resolve('done!'), milliseconds);
-        });
-    });
-}
-exports.wait = wait;
 
 
 /***/ }),

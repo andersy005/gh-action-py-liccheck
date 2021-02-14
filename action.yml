@@ -1,12 +1,24 @@
-#
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: py-licensed
+author: Anderson Banihirwe
+description: Verify the licenses of dependencies of a Python package and report issues.
 inputs:
-  milliseconds: # change this
+  strategy-ini-file:
+    description: Path to strategy ini file or pyproject.toml file to use.
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  level:
+    description: Level for testing compliance of packages.
+    required: false
+    default: STANDARD
+  requirements-txt-file:
+    description: Path to requirements.txt file to use.
+    required: true
+  reporting-txt-file:
+    description: Path to a reporting.txt file to use.
+    required: false
+  no-deps:
+    description: Whether to check dependencies.
+    required: false
+
 runs:
   using: 'node12'
   main: 'dist/index.js'

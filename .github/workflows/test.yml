@@ -21,4 +21,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          milliseconds: 1000
+          strategy-ini-file: ./examples/my_strategy.ini
+          level: STANDARD
+          requirements-txt-file: ./examples/requirements.txt
+          no-deps: true
