@@ -23,10 +23,10 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: andersy005/gh-action-py-licensed:latest
+          tags: andersy005/gh-action-py-liccheck:latest
       - name: Build and push tag
         if: github.event_name == 'release'
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: andersy005/gh-action-py-licensed:${{ github.event.release.tag_name }}
+          tags: andersy005/gh-action-py-liccheck:${{ github.event.release.tag_name }}

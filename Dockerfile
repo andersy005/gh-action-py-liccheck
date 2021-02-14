@@ -1,8 +1,8 @@
 FROM python:3.9-slim
 
 LABEL "maintainer" "Anderson Banihirwe"
-LABEL "repository" "https://github.com/andersy005/gh-action-py-licensed"
-LABEL "homepage" "https://github.com/andersy005/gh-action-py-licensed"
+LABEL "repository" "https://github.com/andersy005/gh-action-py-liccheck"
+LABEL "homepage" "https://github.com/andersy005/gh-action-py-liccheck"
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
