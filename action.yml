@@ -3,21 +3,22 @@ author: Anderson Banihirwe
 description: Check license of Python packages and their dependencies.
 inputs:
   strategy-ini-file:
-    description: Path to strategy ini file or pyproject.toml file to use.
-    required: true
+    description: Path to a strategy ini file or pyproject.toml file to use.
+    required: false
+    default: ./pyproject.toml
   level:
     description: Level for testing compliance of packages.
     required: false
     default: STANDARD
   requirements-txt-file:
-    description: Path to requirements.txt file to use.
+    description: Path to a requirements.txt file to use.
     required: false
     default: ./requirements.txt
   reporting-txt-file:
     description: Path to a reporting.txt file to use.
     required: false
   no-deps:
-    description: Whether to check dependencies.
+    description: Whether not to check dependencies.
     required: false
 
 runs:
