@@ -28,7 +28,16 @@ export async function parseInputs(): Promise<IActionInputs> {
 async function run(): Promise<void> {
   try {
     const inputs: IActionInputs = await parseInputs()
-    core.debug(`Inputs: ${inputs}`) // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
+    const command: string[] = [
+      '-s',
+      inputs.strategyIniFile,
+      '-r',
+      inputs.requirementsTxtFile,
+      '-l',
+      inputs.level,
+    ]
+    core.setOutput('inputs', inputs)
+    core.setOutput('command', command)
   } catch (error) {
     core.setFailed(error.message)
   }
@@ -51,5 +60,4 @@ async function run(): Promise<void> {
 //   }
 // }
 
-// test()
 run()
