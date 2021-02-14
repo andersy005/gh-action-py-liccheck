@@ -1,4 +1,4 @@
-name: py-licensed
+name: py-liccheck
 author: Anderson Banihirwe
 description: Check license of Python packages and their dependencies.
 inputs:
