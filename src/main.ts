@@ -1,6 +1,6 @@
 import * as core from '@actions/core'
-// import * as exec from '@actions/exec'
-// import { wait } from './wait'
+import * as exec from '@actions/exec'
+import * as io from '@actions/io'
 
 export interface IActionInputs {
   readonly strategyIniFile: string
@@ -27,8 +27,26 @@ export async function parseInputs(): Promise<IActionInputs> {
 
 async function run(): Promise<void> {
   try {
-    const inputs: IActionInputs = await parseInputs()
-    const command: string[] = [
+    const inputs = await core.group('Gathering Inputs...', parseInputs)
+    core.info(`\u001b[38;5;6mInputs: ${inputs}`)
+    core.endGroup()
+
+    await core.group('Getting python executable path', async () => {
+      const pythonExe: string = await io.which('python', true)
+      core.info(`\u001b[38;5;6mPython path: ${pythonExe}`)
+      return pythonExe
+    })
+
+    const liccheckPath: string = await core.group(
+      'Getting liccheck executable path',
+      async () => {
+        const liccheckExe: string = await io.which('liccheck', true)
+        core.info(`\u001b[38;5;6mliccheck path: ${liccheckExe}`)
+        return liccheckExe
+      }
+    )
+
+    const commandOptions: string[] = [
       '-s',
       inputs.strategyIniFile,
       '-r',
@@ -36,28 +54,13 @@ async function run(): Promise<void> {
       '-l',
       inputs.level,
     ]
-    core.info(`Inputs: ${inputs}`)
-    core.info(`Command: ${command}`)
+
+    await core.group('Verifying the licenses of dependencies...', async () => {
+      await exec.exec(`"${liccheckPath}"`, commandOptions)
+    })
   } catch (error) {
     core.setFailed(error.message)
   }
 }
-
-// async function test(): Promise<void> {
-//   try {
-//     const inputs: IActionInputs = await parseInputs()
-//     core.debug(`Inputs: ${inputs}`)
-//     // await exec.exec('liccheck', [
-//     //   '-s',
-//     //   'examples/my_strategy.ini',
-//     //   '-r',
-//     //   'examples/requirements.txt',
-//     //   '-l',
-//     //   'PARANOID',
-//     // ])
-//   } catch (error) {
-//     core.setFailed(error.message)
-//   }
-// }
 
 run()
