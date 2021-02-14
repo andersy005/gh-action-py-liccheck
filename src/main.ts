@@ -36,8 +36,8 @@ async function run(): Promise<void> {
       '-l',
       inputs.level,
     ]
-    core.setOutput('inputs', inputs)
-    core.setOutput('command', command)
+    core.info(`Inputs: ${inputs}`)
+    core.info(`Command: ${command}`)
   } catch (error) {
     core.setFailed(error.message)
   }
