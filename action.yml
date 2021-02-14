@@ -1,0 +1,28 @@
+name: py-licensed
+author: Anderson Banihirwe
+description: Verify the licenses of dependencies of a Python package and report issues.
+inputs:
+  strategy-ini-file:
+    description: Path to strategy ini file or pyproject.toml file to use.
+    required: true
+  level:
+    description: Level for testing compliance of packages.
+    required: false
+    default: STANDARD
+  requirements-txt-file:
+    description: Path to requirements.txt file to use.
+    required: true
+  reporting-txt-file:
+    description: Path to a reporting.txt file to use.
+    required: false
+    default: /app/py-licensed-reporting.txt
+  check-deps:
+    description: Whether to check dependencies.
+    required: false
+
+runs:
+  using: docker
+  image: Dockerfile
+branding:
+  icon: list
+  color: purple

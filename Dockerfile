@@ -8,6 +8,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 COPY ./requirements.txt /app/requirements.txt
+COPY ./examples /app/examples
 
 RUN pip install -r /app/requirements.txt
 
