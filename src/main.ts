@@ -7,7 +7,7 @@ export interface IActionInputs {
   readonly level: string
   readonly requirementsTxtFile: string
   readonly reportingTxtFile: string
-  readonly noDeps: boolean | string
+  readonly noDeps: string
 }
 
 export async function parseInputs(): Promise<IActionInputs> {
@@ -52,10 +52,6 @@ async function run(): Promise<void> {
       await exec.exec('cat', [inputs.requirementsTxtFile])
     })
 
-    await core.group('Other parameters', async () => {
-      core.info(`level: ${inputs.level}, no-deps: ${inputs.noDeps}`)
-    })
-
     const commandOptions: string[] = [
       '-s',
       inputs.strategyIniFile,
@@ -64,6 +60,10 @@ async function run(): Promise<void> {
       '-l',
       inputs.level,
     ]
+
+    if (inputs.noDeps === 'true') {
+      commandOptions.push('--no-deps')
+    }
 
     await core.group('Verifying the licenses of dependencies...', async () => {
       await exec.exec(`"${liccheckPath}"`, commandOptions)

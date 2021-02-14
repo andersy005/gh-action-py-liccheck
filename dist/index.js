@@ -78,9 +78,6 @@ function run() {
             yield core.group('Checking licenses for ...', () => __awaiter(this, void 0, void 0, function* () {
                 yield exec.exec('cat', [inputs.requirementsTxtFile]);
             }));
-            yield core.group('Other parameters', () => __awaiter(this, void 0, void 0, function* () {
-                core.info(`level: ${inputs.level}, no-deps: ${inputs.noDeps}`);
-            }));
             const commandOptions = [
                 '-s',
                 inputs.strategyIniFile,
@@ -89,6 +86,9 @@ function run() {
                 '-l',
                 inputs.level,
             ];
+            if (inputs.noDeps === 'true') {
+                commandOptions.push('--no-deps');
+            }
             yield core.group('Verifying the licenses of dependencies...', () => __awaiter(this, void 0, void 0, function* () {
                 yield exec.exec(`"${liccheckPath}"`, commandOptions);
             }));
