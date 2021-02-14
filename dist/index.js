@@ -62,17 +62,24 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const inputs = yield core.group('Gathering Inputs...', parseInputs);
-            core.info(`\u001b[38;5;6mInputs: ${inputs}`);
-            core.endGroup();
-            yield core.group('Getting python executable path', () => __awaiter(this, void 0, void 0, function* () {
+            yield core.group('Getting python executable path ...', () => __awaiter(this, void 0, void 0, function* () {
                 const pythonExe = yield io.which('python', true);
                 core.info(`\u001b[38;5;6mPython path: ${pythonExe}`);
                 return pythonExe;
             }));
-            const liccheckPath = yield core.group('Getting liccheck executable path', () => __awaiter(this, void 0, void 0, function* () {
+            const liccheckPath = yield core.group('Getting liccheck executable path ...', () => __awaiter(this, void 0, void 0, function* () {
                 const liccheckExe = yield io.which('liccheck', true);
                 core.info(`\u001b[38;5;6mliccheck path: ${liccheckExe}`);
                 return liccheckExe;
+            }));
+            yield core.group('Strategy to use...', () => __awaiter(this, void 0, void 0, function* () {
+                yield exec.exec('cat', [inputs.strategyIniFile]);
+            }));
+            yield core.group('Checking licenses for ...', () => __awaiter(this, void 0, void 0, function* () {
+                yield exec.exec('cat', [inputs.requirementsTxtFile]);
+            }));
+            yield core.group('Other parameters', () => __awaiter(this, void 0, void 0, function* () {
+                core.info(`level: ${inputs.level}, no-deps: ${inputs.noDeps}`);
             }));
             const commandOptions = [
                 '-s',
