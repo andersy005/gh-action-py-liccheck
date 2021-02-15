@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as io from '@actions/io'
+import * as fs from 'fs'
 
 export interface IActionInputs {
   readonly strategyIniFile: string
@@ -45,11 +46,13 @@ async function run(): Promise<void> {
     )
 
     await core.group('Strategy to use...', async () => {
-      await exec.exec('cat', [inputs.strategyIniFile])
+      const strategy = fs.readFileSync(inputs.strategyIniFile, 'utf-8')
+      core.info(`\u001b[38;5;6m${strategy}`)
     })
 
     await core.group('Checking licenses for ...', async () => {
-      await exec.exec('cat', [inputs.requirementsTxtFile])
+      const requirements = fs.readFileSync(inputs.requirementsTxtFile, 'utf-8')
+      core.info(`\u001b[38;5;6m${requirements}`)
     })
 
     const commandOptions: string[] = []
@@ -68,6 +71,8 @@ async function run(): Promise<void> {
           inputs.requirementsTxtFile,
           '-l',
           inputs.level,
+          '-R',
+          inputs.reportingTxtFile,
         ]
       )
     }
@@ -78,6 +83,11 @@ async function run(): Promise<void> {
 
     await core.group('Running the license checker...', async () => {
       await exec.exec(`"${liccheckPath}"`, commandOptions)
+    })
+
+    await core.group('License Checker Report ...', async () => {
+      const report = fs.readFileSync(inputs.reportingTxtFile, 'utf-8')
+      core.info(`\u001b[38;5;6m${report}`)
     })
   } catch (error) {
     core.setFailed(error.message)

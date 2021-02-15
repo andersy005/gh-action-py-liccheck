@@ -17,6 +17,7 @@ inputs:
   reporting-txt-file:
     description: Path to a reporting.txt file to use.
     required: false
+    default: liccheck-report.txt
   no-deps:
     description: Whether not to check dependencies.
     required: false

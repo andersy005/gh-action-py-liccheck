@@ -40,6 +40,7 @@ exports.parseInputs = void 0;
 const core = __importStar(__webpack_require__(186));
 const exec = __importStar(__webpack_require__(514));
 const io = __importStar(__webpack_require__(436));
+const fs = __importStar(__webpack_require__(747));
 function parseInputs() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -73,10 +74,12 @@ function run() {
                 return liccheckExe;
             }));
             yield core.group('Strategy to use...', () => __awaiter(this, void 0, void 0, function* () {
-                yield exec.exec('cat', [inputs.strategyIniFile]);
+                const strategy = fs.readFileSync(inputs.strategyIniFile, 'utf-8');
+                core.info(`\u001b[38;5;6m${strategy}`);
             }));
             yield core.group('Checking licenses for ...', () => __awaiter(this, void 0, void 0, function* () {
-                yield exec.exec('cat', [inputs.requirementsTxtFile]);
+                const requirements = fs.readFileSync(inputs.requirementsTxtFile, 'utf-8');
+                core.info(`\u001b[38;5;6m${requirements}`);
             }));
             const commandOptions = [];
             if (inputs.strategyIniFile === 'pyproject.toml' ||
@@ -91,6 +94,8 @@ function run() {
                     inputs.requirementsTxtFile,
                     '-l',
                     inputs.level,
+                    '-R',
+                    inputs.reportingTxtFile,
                 ]);
             }
             if (inputs.noDeps === 'true') {
@@ -98,6 +103,10 @@ function run() {
             }
             yield core.group('Running the license checker...', () => __awaiter(this, void 0, void 0, function* () {
                 yield exec.exec(`"${liccheckPath}"`, commandOptions);
+            }));
+            yield core.group('License Checker Report ...', () => __awaiter(this, void 0, void 0, function* () {
+                const report = fs.readFileSync(inputs.reportingTxtFile, 'utf-8');
+                core.info(`\u001b[38;5;6m${report}`);
             }));
         }
         catch (error) {
