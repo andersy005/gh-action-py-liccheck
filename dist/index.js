@@ -63,7 +63,6 @@ exports.parseInputs = parseInputs;
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const execOptions = { silent: true };
             const inputs = yield core.group('Gathering Inputs...', parseInputs);
             yield core.group('Getting python executable path ...', () => __awaiter(this, void 0, void 0, function* () {
                 const pythonExe = yield io.which('python', true);
@@ -111,7 +110,7 @@ function run() {
             }
             yield core.group('Running the license checker...', () => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    yield exec.exec(`"${liccheckPath}"`, commandOptions, execOptions);
+                    yield exec.exec(`"${liccheckPath}"`, commandOptions);
                 }
                 catch (error) {
                     core.info('Logging report...');

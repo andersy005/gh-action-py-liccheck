@@ -29,7 +29,6 @@ export async function parseInputs(): Promise<IActionInputs> {
 
 async function run(): Promise<void> {
   try {
-    const execOptions = { silent: true }
     const inputs = await core.group('Gathering Inputs...', parseInputs)
 
     await core.group('Getting python executable path ...', async () => {
@@ -94,7 +93,7 @@ async function run(): Promise<void> {
 
     await core.group('Running the license checker...', async () => {
       try {
-        await exec.exec(`"${liccheckPath}"`, commandOptions, execOptions)
+        await exec.exec(`"${liccheckPath}"`, commandOptions)
       } catch (error) {
         core.info('Logging report...')
       }
