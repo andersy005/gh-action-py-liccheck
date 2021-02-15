@@ -76,11 +76,21 @@ function run() {
                 return liccheckExe;
             }));
             yield core.group('Strategy to use...', () => __awaiter(this, void 0, void 0, function* () {
-                const strategy = fs.readFileSync(inputs.strategyIniFile, 'utf-8');
+                const strategy = fs
+                    .readFileSync(inputs.strategyIniFile, 'utf-8')
+                    .trim()
+                    .split('\n')
+                    .map((line) => `${style.bold.open}${line}${style.bold.close}`)
+                    .join('\n');
                 core.info(strategy);
             }));
             yield core.group('Checking licenses for ...', () => __awaiter(this, void 0, void 0, function* () {
-                const requirements = fs.readFileSync(inputs.requirementsTxtFile, 'utf-8');
+                const requirements = fs
+                    .readFileSync(inputs.requirementsTxtFile, 'utf-8')
+                    .trim()
+                    .split('\n')
+                    .map((line) => `${style.bold.open}${line}${style.bold.close}`)
+                    .join('\n');
                 core.info(requirements);
             }));
             const commandOptions = [];
@@ -108,8 +118,13 @@ function run() {
                 }
             }));
             core.info(`${style.cyan.open}License Checker Report ...${style.cyan.close}`);
-            const report = fs.readFileSync(inputs.reportingTxtFile, 'utf-8');
-            core.info(`${style.bold.open}${report}${style.bold.close}`);
+            const report = fs
+                .readFileSync(inputs.reportingTxtFile, 'utf-8')
+                .trim()
+                .split('\n')
+                .map((line) => `${style.bold.open}${line}${style.bold.close}`)
+                .join('\n');
+            core.info(report);
         }
         catch (error) {
             core.setFailed(error.message);

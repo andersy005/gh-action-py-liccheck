@@ -52,12 +52,22 @@ async function run(): Promise<void> {
     )
 
     await core.group('Strategy to use...', async () => {
-      const strategy = fs.readFileSync(inputs.strategyIniFile, 'utf-8')
+      const strategy = fs
+        .readFileSync(inputs.strategyIniFile, 'utf-8')
+        .trim()
+        .split('\n')
+        .map((line) => `${style.bold.open}${line}${style.bold.close}`)
+        .join('\n')
       core.info(strategy)
     })
 
     await core.group('Checking licenses for ...', async () => {
-      const requirements = fs.readFileSync(inputs.requirementsTxtFile, 'utf-8')
+      const requirements = fs
+        .readFileSync(inputs.requirementsTxtFile, 'utf-8')
+        .trim()
+        .split('\n')
+        .map((line) => `${style.bold.open}${line}${style.bold.close}`)
+        .join('\n')
       core.info(requirements)
     })
 
@@ -90,8 +100,13 @@ async function run(): Promise<void> {
       }
     })
     core.info(`${style.cyan.open}License Checker Report ...${style.cyan.close}`)
-    const report = fs.readFileSync(inputs.reportingTxtFile, 'utf-8')
-    core.info(`${style.bold.open}${report}${style.bold.close}`)
+    const report = fs
+      .readFileSync(inputs.reportingTxtFile, 'utf-8')
+      .trim()
+      .split('\n')
+      .map((line) => `${style.bold.open}${line}${style.bold.close}`)
+      .join('\n')
+    core.info(report)
   } catch (error) {
     core.setFailed(error.message)
   }
