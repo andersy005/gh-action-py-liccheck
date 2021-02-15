@@ -67,12 +67,12 @@ function run() {
             const inputs = yield core.group('Gathering Inputs...', parseInputs);
             yield core.group('Getting python executable path ...', () => __awaiter(this, void 0, void 0, function* () {
                 const pythonExe = yield io.which('python', true);
-                core.info(`${style.cyan}Python path: ${pythonExe}`);
+                core.info(`${style.cyan.open}Python path: ${pythonExe}${style.cyan.close}`);
                 return pythonExe;
             }));
             const liccheckPath = yield core.group('Getting liccheck executable path ...', () => __awaiter(this, void 0, void 0, function* () {
                 const liccheckExe = yield io.which('liccheck', true);
-                core.info(`${style.cyan}liccheck path: ${liccheckExe}`);
+                core.info(`${style.cyan.open}liccheck path: ${liccheckExe}${style.cyan.close}`);
                 return liccheckExe;
             }));
             yield core.group('Strategy to use...', () => __awaiter(this, void 0, void 0, function* () {
@@ -99,17 +99,17 @@ function run() {
             if (inputs.noDeps === 'true') {
                 commandOptions.push('--no-deps');
             }
-            try {
-                yield core.group('Running the license checker...', () => __awaiter(this, void 0, void 0, function* () {
+            yield core.group('Running the license checker...', () => __awaiter(this, void 0, void 0, function* () {
+                try {
                     yield exec.exec(`"${liccheckPath}"`, commandOptions, execOptions);
-                }));
-                core.info(`${style.cyan}License Checker Report ...`);
-                const report = fs.readFileSync(inputs.reportingTxtFile, 'utf-8');
-                core.info(report);
-            }
-            catch (error) {
-                core.setFailed(error.message);
-            }
+                }
+                catch (error) {
+                    core.info('Logging report...');
+                }
+            }));
+            core.info(`${style.cyan.open}License Checker Report ...${style.cyan.close}`);
+            const report = fs.readFileSync(inputs.reportingTxtFile, 'utf-8');
+            core.info(`${style.bold.open}${report}${style.bold.close}`);
         }
         catch (error) {
             core.setFailed(error.message);

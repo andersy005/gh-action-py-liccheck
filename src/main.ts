@@ -34,7 +34,9 @@ async function run(): Promise<void> {
 
     await core.group('Getting python executable path ...', async () => {
       const pythonExe: string = await io.which('python', true)
-      core.info(`${style.cyan}Python path: ${pythonExe}`)
+      core.info(
+        `${style.cyan.open}Python path: ${pythonExe}${style.cyan.close}`
+      )
       return pythonExe
     })
 
@@ -42,7 +44,9 @@ async function run(): Promise<void> {
       'Getting liccheck executable path ...',
       async () => {
         const liccheckExe: string = await io.which('liccheck', true)
-        core.info(`${style.cyan}liccheck path: ${liccheckExe}`)
+        core.info(
+          `${style.cyan.open}liccheck path: ${liccheckExe}${style.cyan.close}`
+        )
         return liccheckExe
       }
     )
@@ -78,16 +82,16 @@ async function run(): Promise<void> {
       commandOptions.push('--no-deps')
     }
 
-    try {
-      await core.group('Running the license checker...', async () => {
+    await core.group('Running the license checker...', async () => {
+      try {
         await exec.exec(`"${liccheckPath}"`, commandOptions, execOptions)
-      })
-      core.info(`${style.cyan}License Checker Report ...`)
-      const report = fs.readFileSync(inputs.reportingTxtFile, 'utf-8')
-      core.info(report)
-    } catch (error) {
-      core.setFailed(error.message)
-    }
+      } catch (error) {
+        core.info('Logging report...')
+      }
+    })
+    core.info(`${style.cyan.open}License Checker Report ...${style.cyan.close}`)
+    const report = fs.readFileSync(inputs.reportingTxtFile, 'utf-8')
+    core.info(`${style.bold.open}${report}${style.bold.close}`)
   } catch (error) {
     core.setFailed(error.message)
   }
