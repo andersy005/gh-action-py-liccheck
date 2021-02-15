@@ -2,6 +2,7 @@ import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as io from '@actions/io'
 import * as fs from 'fs'
+import * as style from 'ansi-styles'
 
 export interface IActionInputs {
   readonly strategyIniFile: string
@@ -28,11 +29,12 @@ export async function parseInputs(): Promise<IActionInputs> {
 
 async function run(): Promise<void> {
   try {
+    const execOptions = { silent: true }
     const inputs = await core.group('Gathering Inputs...', parseInputs)
 
     await core.group('Getting python executable path ...', async () => {
       const pythonExe: string = await io.which('python', true)
-      core.info(`\u001b[38;5;6mPython path: ${pythonExe}`)
+      core.info(`${style.cyan}Python path: ${pythonExe}`)
       return pythonExe
     })
 
@@ -40,7 +42,7 @@ async function run(): Promise<void> {
       'Getting liccheck executable path ...',
       async () => {
         const liccheckExe: string = await io.which('liccheck', true)
-        core.info(`\u001b[38;5;6mliccheck path: ${liccheckExe}`)
+        core.info(`${style.cyan}liccheck path: ${liccheckExe}`)
         return liccheckExe
       }
     )
@@ -76,12 +78,16 @@ async function run(): Promise<void> {
       commandOptions.push('--no-deps')
     }
 
-    await core.group('Running the license checker...', async () => {
-      await exec.exec(`"${liccheckPath}"`, commandOptions)
-    })
-    core.info('\u001b[38;5;6mLicense Checker Report ...')
-    const report = fs.readFileSync(inputs.reportingTxtFile, 'utf-8')
-    core.info(report)
+    try {
+      await core.group('Running the license checker...', async () => {
+        await exec.exec(`"${liccheckPath}"`, commandOptions, execOptions)
+      })
+      core.info(`${style.cyan}License Checker Report ...`)
+      const report = fs.readFileSync(inputs.reportingTxtFile, 'utf-8')
+      core.info(report)
+    } catch (error) {
+      core.setFailed(error.message)
+    }
   } catch (error) {
     core.setFailed(error.message)
   }
