@@ -52,14 +52,25 @@ async function run(): Promise<void> {
       await exec.exec('cat', [inputs.requirementsTxtFile])
     })
 
-    const commandOptions: string[] = [
-      '-s',
-      inputs.strategyIniFile,
-      '-r',
-      inputs.requirementsTxtFile,
-      '-l',
-      inputs.level,
-    ]
+    const commandOptions: string[] = []
+
+    if (
+      inputs.strategyIniFile === 'pyproject.toml' ||
+      inputs.strategyIniFile === './pyproject.toml'
+    ) {
+      core.info("Using 'pyproject.toml' file...")
+    } else {
+      commandOptions.push(
+        ...[
+          '-s',
+          inputs.strategyIniFile,
+          '-r',
+          inputs.requirementsTxtFile,
+          '-l',
+          inputs.level,
+        ]
+      )
+    }
 
     if (inputs.noDeps === 'true') {
       commandOptions.push('--no-deps')

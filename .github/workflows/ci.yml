@@ -15,7 +15,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -r requirements.txt
+          python -m pip install -r dev-requirements.txt
       - run: |
           npm install
       - run: |
@@ -28,16 +28,14 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -r requirements.txt
+          python -m pip install -r dev-requirements.txt
       - name: user inputs
         uses: ./
         with:
-          strategy-ini-file: ./examples/my_strategy.ini
+          strategy-ini-file: ./my_strategy.ini
           level: STANDARD
-          requirements-txt-file: ./examples/requirements.txt
+          requirements-txt-file: ./requirements.txt
           no-deps: true
 
       - name: default inputs
         uses: ./
-        with:
-          strategy-ini-file: ./examples/my_strategy.ini

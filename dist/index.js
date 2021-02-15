@@ -78,14 +78,21 @@ function run() {
             yield core.group('Checking licenses for ...', () => __awaiter(this, void 0, void 0, function* () {
                 yield exec.exec('cat', [inputs.requirementsTxtFile]);
             }));
-            const commandOptions = [
-                '-s',
-                inputs.strategyIniFile,
-                '-r',
-                inputs.requirementsTxtFile,
-                '-l',
-                inputs.level,
-            ];
+            const commandOptions = [];
+            if (inputs.strategyIniFile === 'pyproject.toml' ||
+                inputs.strategyIniFile === './pyproject.toml') {
+                core.info("Using 'pyproject.toml' file...");
+            }
+            else {
+                commandOptions.push(...[
+                    '-s',
+                    inputs.strategyIniFile,
+                    '-r',
+                    inputs.requirementsTxtFile,
+                    '-l',
+                    inputs.level,
+                ]);
+            }
             if (inputs.noDeps === 'true') {
                 commandOptions.push('--no-deps');
             }
