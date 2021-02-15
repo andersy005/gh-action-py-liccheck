@@ -47,12 +47,12 @@ async function run(): Promise<void> {
 
     await core.group('Strategy to use...', async () => {
       const strategy = fs.readFileSync(inputs.strategyIniFile, 'utf-8')
-      core.info(`\u001b[38;5;6m${strategy}`)
+      core.info(strategy)
     })
 
     await core.group('Checking licenses for ...', async () => {
       const requirements = fs.readFileSync(inputs.requirementsTxtFile, 'utf-8')
-      core.info(`\u001b[38;5;6m${requirements}`)
+      core.info(requirements)
     })
 
     const commandOptions: string[] = []
@@ -87,7 +87,7 @@ async function run(): Promise<void> {
 
     await core.group('License Checker Report ...', async () => {
       const report = fs.readFileSync(inputs.reportingTxtFile, 'utf-8')
-      core.info(`\u001b[38;5;6m${report}`)
+      core.info(report)
     })
   } catch (error) {
     core.setFailed(error.message)

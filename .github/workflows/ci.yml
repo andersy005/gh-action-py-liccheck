@@ -29,13 +29,19 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r dev-requirements.txt
+
+      - name: default inputs
+        uses: ./
+
       - name: user inputs
         uses: ./
         with:
           strategy-ini-file: ./my_strategy.ini
-          level: STANDARD
+          level: cautious
           requirements-txt-file: ./requirements.txt
           no-deps: true
 
-      - name: default inputs
+      - name: user inputs (paranoid)
         uses: ./
+        with:
+          level: paranoid

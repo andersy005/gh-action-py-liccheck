@@ -75,11 +75,11 @@ function run() {
             }));
             yield core.group('Strategy to use...', () => __awaiter(this, void 0, void 0, function* () {
                 const strategy = fs.readFileSync(inputs.strategyIniFile, 'utf-8');
-                core.info(`\u001b[38;5;6m${strategy}`);
+                core.info(strategy);
             }));
             yield core.group('Checking licenses for ...', () => __awaiter(this, void 0, void 0, function* () {
                 const requirements = fs.readFileSync(inputs.requirementsTxtFile, 'utf-8');
-                core.info(`\u001b[38;5;6m${requirements}`);
+                core.info(requirements);
             }));
             const commandOptions = [];
             if (inputs.strategyIniFile === 'pyproject.toml' ||
@@ -106,7 +106,7 @@ function run() {
             }));
             yield core.group('License Checker Report ...', () => __awaiter(this, void 0, void 0, function* () {
                 const report = fs.readFileSync(inputs.reportingTxtFile, 'utf-8');
-                core.info(`\u001b[38;5;6m${report}`);
+                core.info(report);
             }));
         }
         catch (error) {
