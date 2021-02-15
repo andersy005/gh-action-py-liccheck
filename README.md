@@ -8,7 +8,7 @@ To integrate this action with your action pipelines, add the following step to y
 
 ### Basic
 
-The basic usage uses the default values defined in table below. Therefore, as user you don't have to specify anything argument:
+The basic usage uses the default values defined in table below. Therefore, as a user you don't have to specify any argument:
 
 ```yaml
 - name: License Checker
@@ -39,6 +39,78 @@ These inputs, along with their descriptions and usage contexts, are listed in th
 | `requirements-txt-file` |                                                                                    Path to a requirements.txt file to use.                                                                                     | Optional | `requirements.txt` |
 |        `no-deps`        |                                                                                     Whether **not** to check dependencies.                                                                                     | Optional |      `false`       |
 |         `level`         | Level for testing compliance of packages, where: `standard` - At least one authorized license (default); `cautious` - Per standard but no unauthorized licenses; `paranoid` - All licenses must by authorized. | Optional |     `standard`     |
+
+### Example strategy files
+
+<details>
+<summary>Example pyproject.toml</summary>
+
+```toml
+[tool.liccheck]
+authorized_licenses = [
+        "bsd",
+        "new bsd",
+        "bsd license",
+        "new bsd license",
+        "simplified bsd",
+        "apache",
+        "apache 2.0",
+        "apache software license",
+        "apache software",
+        "gnu lgpl",
+        "lgpl with exceptions or zpl",
+        "isc license",
+        "isc license (iscl)",
+        "mit",
+        "mit license",
+        "python software foundation license",
+        "zpl 2.1"
+]
+
+unauthorized_licenses = [
+        "gpl v3"
+]
+
+[tool.liccheck.authorized_packages]
+uuid = "<=1.30"
+```
+
+</details>
+
+<details>
+<summary>Example strategy.ini</summary>
+
+```ini
+# Authorized and unauthorized licenses in LOWER CASE
+[Licenses]
+authorized_licenses:
+        bsd
+        new bsd
+        bsd license
+        new bsd license
+        simplified bsd
+        apache
+        apache 2.0
+        apache software license
+        apache software
+        gnu lgpl
+        lgpl with exceptions or zpl
+        isc license
+        isc license (iscl)
+        mit
+        mit license
+        python software foundation license
+        zpl 2.1
+
+unauthorized_licenses:
+        gpl v3
+
+[Authorized Packages]
+uuid: 1.30
+
+```
+
+</details>
 
 ## Contributing
 
