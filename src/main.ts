@@ -56,26 +56,21 @@ async function run(): Promise<void> {
     })
 
     const commandOptions: string[] = []
-
-    if (
-      inputs.strategyIniFile === 'pyproject.toml' ||
-      inputs.strategyIniFile === './pyproject.toml'
-    ) {
-      core.info("Using 'pyproject.toml' file...")
-    } else {
-      commandOptions.push(
-        ...[
-          '-s',
-          inputs.strategyIniFile,
-          '-r',
-          inputs.requirementsTxtFile,
-          '-l',
-          inputs.level,
-          '-R',
-          inputs.reportingTxtFile,
-        ]
-      )
+    const tomls = ['pyproject.toml', './pyproject.toml']
+    if (!(inputs.strategyIniFile in tomls)) {
+      commandOptions.push(...['-s', inputs.strategyIniFile])
     }
+
+    commandOptions.push(
+      ...[
+        '-r',
+        inputs.requirementsTxtFile,
+        '-l',
+        inputs.level,
+        '-R',
+        inputs.reportingTxtFile,
+      ]
+    )
 
     if (inputs.noDeps === 'true') {
       commandOptions.push('--no-deps')

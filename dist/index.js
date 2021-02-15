@@ -82,22 +82,18 @@ function run() {
                 core.info(requirements);
             }));
             const commandOptions = [];
-            if (inputs.strategyIniFile === 'pyproject.toml' ||
-                inputs.strategyIniFile === './pyproject.toml') {
-                core.info("Using 'pyproject.toml' file...");
+            const tomls = ['pyproject.toml', './pyproject.toml'];
+            if (!(inputs.strategyIniFile in tomls)) {
+                commandOptions.push(...['-s', inputs.strategyIniFile]);
             }
-            else {
-                commandOptions.push(...[
-                    '-s',
-                    inputs.strategyIniFile,
-                    '-r',
-                    inputs.requirementsTxtFile,
-                    '-l',
-                    inputs.level,
-                    '-R',
-                    inputs.reportingTxtFile,
-                ]);
-            }
+            commandOptions.push(...[
+                '-r',
+                inputs.requirementsTxtFile,
+                '-l',
+                inputs.level,
+                '-R',
+                inputs.reportingTxtFile,
+            ]);
             if (inputs.noDeps === 'true') {
                 commandOptions.push('--no-deps');
             }
