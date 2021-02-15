@@ -57,7 +57,7 @@ async function run(): Promise<void> {
 
     const commandOptions: string[] = []
     const tomls = ['pyproject.toml', './pyproject.toml']
-    if (!(inputs.strategyIniFile in tomls)) {
+    if (!tomls.includes(inputs.strategyIniFile)) {
       commandOptions.push(...['-s', inputs.strategyIniFile])
     }
 
@@ -79,11 +79,9 @@ async function run(): Promise<void> {
     await core.group('Running the license checker...', async () => {
       await exec.exec(`"${liccheckPath}"`, commandOptions)
     })
-
-    await core.group('License Checker Report ...', async () => {
-      const report = fs.readFileSync(inputs.reportingTxtFile, 'utf-8')
-      core.info(report)
-    })
+    core.info('\u001b[38;5;6mLicense Checker Report ...')
+    const report = fs.readFileSync(inputs.reportingTxtFile, 'utf-8')
+    core.info(report)
   } catch (error) {
     core.setFailed(error.message)
   }

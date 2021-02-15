@@ -83,7 +83,7 @@ function run() {
             }));
             const commandOptions = [];
             const tomls = ['pyproject.toml', './pyproject.toml'];
-            if (!(inputs.strategyIniFile in tomls)) {
+            if (!tomls.includes(inputs.strategyIniFile)) {
                 commandOptions.push(...['-s', inputs.strategyIniFile]);
             }
             commandOptions.push(...[
@@ -100,10 +100,9 @@ function run() {
             yield core.group('Running the license checker...', () => __awaiter(this, void 0, void 0, function* () {
                 yield exec.exec(`"${liccheckPath}"`, commandOptions);
             }));
-            yield core.group('License Checker Report ...', () => __awaiter(this, void 0, void 0, function* () {
-                const report = fs.readFileSync(inputs.reportingTxtFile, 'utf-8');
-                core.info(report);
-            }));
+            core.info('\u001b[38;5;6mLicense Checker Report ...');
+            const report = fs.readFileSync(inputs.reportingTxtFile, 'utf-8');
+            core.info(report);
         }
         catch (error) {
             core.setFailed(error.message);
