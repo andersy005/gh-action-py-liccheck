@@ -1,5 +1,14 @@
 # `andersy005/gh-action-py-liccheck`
 
+- [`andersy005/gh-action-py-liccheck`](#andersy005gh-action-py-liccheck)
+  - [Usage](#usage)
+    - [Basic](#basic)
+    - [With custom locations for strategy and requirements files](#with-custom-locations-for-strategy-and-requirements-files)
+  - [Arguments](#arguments)
+    - [Example strategy files](#example-strategy-files)
+  - [Contributing](#contributing)
+  - [License](#license)
+
 This GitHub action checks license of Python packages and their dependencies via the [liccheck](https://github.com/dhatim/python-license-check) package.
 
 ## Usage
