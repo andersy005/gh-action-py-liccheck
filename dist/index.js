@@ -132,7 +132,8 @@ function run() {
             const report = yield readFileAndApplyStyle(inputs.reportingTxtFile, style.bold.open, style.bold.close);
             core.info(report);
             if (errors.status === true) {
-                throw errors.message;
+                core.setFailed(`License checker failed: ${errors.message}. Found incompatible and/or unknown licenses.
+        \n${style.bold.open}Check the 'Running the license checker...' section for more information..${style.bold.close}`);
             }
         }
         catch (error) {
