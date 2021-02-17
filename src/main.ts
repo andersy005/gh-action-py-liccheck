@@ -50,12 +50,19 @@ async function run(): Promise<void> {
   try {
     const inputs = await core.group('Gathering Inputs...', parseInputs)
 
-    await core.group('Getting python executable path ...', async () => {
-      const pythonExe: string = await io.which('python', true)
-      core.info(
-        `${style.cyan.open}Python path: ${pythonExe}${style.cyan.close}`
-      )
-      return pythonExe
+    const PythonPath: string = await core.group(
+      'Getting python executable path ...',
+      async () => {
+        const pythonExe: string = await io.which('python', true)
+        core.info(
+          `${style.cyan.open}Python path: ${pythonExe}${style.cyan.close}`
+        )
+        return pythonExe
+      }
+    )
+
+    await core.group('Installing liccheck...', async () => {
+      await exec.exec(`"${PythonPath}"`, ['-m', 'pip', 'install', 'liccheck'])
     })
 
     const liccheckPath: string = await core.group(

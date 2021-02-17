@@ -47,7 +47,7 @@ These inputs, along with their descriptions and usage contexts, are listed in th
 |   `strategy-ini-file`   |                                                                          Path to a strategy ini file or a pyproject.toml file to use.                                                                          | Optional |  `pyproject.toml`  |
 | `requirements-txt-file` |                                                                                    Path to a requirements.txt file to use.                                                                                     | Optional | `requirements.txt` |
 |        `no-deps`        |                                                                                     Whether **not** to check dependencies.                                                                                     | Optional |      `false`       |
-|         `level`         | Level for testing compliance of packages, where: `standard` - At least one authorized license (default); `cautious` - Per standard but no unauthorized licenses; `paranoid` - All licenses must by authorized. | Optional |     `standard`     |
+|         `level`         | Level for testing compliance of packages, where: `standard` - At least one authorized license (default); `cautious` - Per standard but no unauthorized licenses; `paranoid` - All licenses must be authorized. | Optional |     `standard`     |
 
 ### Example strategy files
 

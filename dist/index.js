@@ -80,10 +80,13 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const inputs = yield core.group('Gathering Inputs...', parseInputs);
-            yield core.group('Getting python executable path ...', () => __awaiter(this, void 0, void 0, function* () {
+            const PythonPath = yield core.group('Getting python executable path ...', () => __awaiter(this, void 0, void 0, function* () {
                 const pythonExe = yield io.which('python', true);
                 core.info(`${style.cyan.open}Python path: ${pythonExe}${style.cyan.close}`);
                 return pythonExe;
+            }));
+            yield core.group('Installing liccheck...', () => __awaiter(this, void 0, void 0, function* () {
+                yield exec.exec(`"${PythonPath}"`, ['-m', 'pip', 'install', 'liccheck']);
             }));
             const liccheckPath = yield core.group('Getting liccheck executable path ...', () => __awaiter(this, void 0, void 0, function* () {
                 const liccheckExe = yield io.which('liccheck', true);
