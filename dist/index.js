@@ -60,6 +60,22 @@ function parseInputs() {
     });
 }
 exports.parseInputs = parseInputs;
+function readFileAndApplyStyle(file, style_open, style_close) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const content = fs
+                .readFileSync(file, 'utf-8')
+                .trim()
+                .split('\n')
+                .map((line) => `${style_open}${line}${style_close}`)
+                .join('\n');
+            return content;
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -75,21 +91,12 @@ function run() {
                 return liccheckExe;
             }));
             yield core.group('Strategy to use...', () => __awaiter(this, void 0, void 0, function* () {
-                const strategy = fs
-                    .readFileSync(inputs.strategyIniFile, 'utf-8')
-                    .trim()
-                    .split('\n')
-                    .map((line) => `${style.bold.open}${line}${style.bold.close}`)
-                    .join('\n');
+                core.info(typeof style.bold);
+                const strategy = yield readFileAndApplyStyle(inputs.strategyIniFile, style.bold.open, style.bold.close);
                 core.info(strategy);
             }));
             yield core.group('Checking licenses for ...', () => __awaiter(this, void 0, void 0, function* () {
-                const requirements = fs
-                    .readFileSync(inputs.requirementsTxtFile, 'utf-8')
-                    .trim()
-                    .split('\n')
-                    .map((line) => `${style.bold.open}${line}${style.bold.close}`)
-                    .join('\n');
+                const requirements = yield readFileAndApplyStyle(inputs.requirementsTxtFile, style.bold.open, style.bold.close);
                 core.info(requirements);
             }));
             const commandOptions = [];
@@ -117,12 +124,7 @@ function run() {
                 }
             }));
             core.info(`${style.cyan.open}License Checker Report ...${style.cyan.close}`);
-            const report = fs
-                .readFileSync(inputs.reportingTxtFile, 'utf-8')
-                .trim()
-                .split('\n')
-                .map((line) => `${style.bold.open}${line}${style.bold.close}`)
-                .join('\n');
+            const report = yield readFileAndApplyStyle(inputs.reportingTxtFile, style.bold.open, style.bold.close);
             core.info(report);
         }
         catch (error) {

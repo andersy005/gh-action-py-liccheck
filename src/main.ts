@@ -27,6 +27,25 @@ export async function parseInputs(): Promise<IActionInputs> {
   }
 }
 
+async function readFileAndApplyStyle(
+  file: string,
+  style_open: string,
+  style_close: string
+): Promise<string> {
+  try {
+    const content = fs
+      .readFileSync(file, 'utf-8')
+      .trim()
+      .split('\n')
+      .map((line) => `${style_open}${line}${style_close}`)
+      .join('\n')
+
+    return content
+  } catch (error) {
+    throw error
+  }
+}
+
 async function run(): Promise<void> {
   try {
     const inputs = await core.group('Gathering Inputs...', parseInputs)
@@ -51,22 +70,21 @@ async function run(): Promise<void> {
     )
 
     await core.group('Strategy to use...', async () => {
-      const strategy = fs
-        .readFileSync(inputs.strategyIniFile, 'utf-8')
-        .trim()
-        .split('\n')
-        .map((line) => `${style.bold.open}${line}${style.bold.close}`)
-        .join('\n')
+      core.info(typeof style.bold)
+      const strategy = await readFileAndApplyStyle(
+        inputs.strategyIniFile,
+        style.bold.open,
+        style.bold.close
+      )
       core.info(strategy)
     })
 
     await core.group('Checking licenses for ...', async () => {
-      const requirements = fs
-        .readFileSync(inputs.requirementsTxtFile, 'utf-8')
-        .trim()
-        .split('\n')
-        .map((line) => `${style.bold.open}${line}${style.bold.close}`)
-        .join('\n')
+      const requirements = await readFileAndApplyStyle(
+        inputs.requirementsTxtFile,
+        style.bold.open,
+        style.bold.close
+      )
       core.info(requirements)
     })
 
@@ -99,12 +117,11 @@ async function run(): Promise<void> {
       }
     })
     core.info(`${style.cyan.open}License Checker Report ...${style.cyan.close}`)
-    const report = fs
-      .readFileSync(inputs.reportingTxtFile, 'utf-8')
-      .trim()
-      .split('\n')
-      .map((line) => `${style.bold.open}${line}${style.bold.close}`)
-      .join('\n')
+    const report = await readFileAndApplyStyle(
+      inputs.reportingTxtFile,
+      style.bold.open,
+      style.bold.close
+    )
     core.info(report)
   } catch (error) {
     core.setFailed(error.message)
