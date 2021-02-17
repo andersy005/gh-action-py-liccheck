@@ -4,6 +4,7 @@
   - [Usage](#usage)
     - [Basic](#basic)
     - [With custom locations for strategy and requirements files](#with-custom-locations-for-strategy-and-requirements-files)
+  - [GitHub action outcomes](#github-action-outcomes)
   - [Arguments](#arguments)
   - [How `liccheck` works](#how-liccheck-works)
   - [Example strategy files](#example-strategy-files)
@@ -37,9 +38,27 @@ The basic usage uses the default values defined in table below. Therefore, as a 
     no-deps: true
 ```
 
+## GitHub action outcomes
+
+Once this action finishes running, it reports the status of compliance of packages. Depending on your settings (strategy, level, etc), you should see something of this sort in your workflow's logs:
+
+<details>
+<summary>Outcome 1 - Success</summary>
+
+<img src="images/success.png">
+
+</details>
+
+<details>
+<summary>Outcome 2 - Failure</summary>
+
+<img src="images/failure.png">
+
+</details>
+
 ## Arguments
 
-This action currently supports five inputs from teh user: `strategy-ini-file`, `level`, `requirements-txt-file`, `no-deps`, and `reporting-txt-file`.
+This action currently supports four inputs from the user: `strategy-ini-file`, `level`, `requirements-txt-file`, and `no-deps`.
 
 These inputs, along with their descriptions and usage contexts, are listed in the table below:
 
