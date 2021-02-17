@@ -118,17 +118,22 @@ function run() {
             if (inputs.noDeps === 'true') {
                 commandOptions.push('--no-deps');
             }
+            const errors = { message: '', status: false };
             yield core.group('Running the license checker...', () => __awaiter(this, void 0, void 0, function* () {
                 try {
                     yield exec.exec(`"${liccheckPath}"`, commandOptions);
                 }
                 catch (error) {
-                    core.info('Logging report...');
+                    errors.message = error.message;
+                    errors.status = true;
                 }
             }));
             core.info(`${style.cyan.open}License Checker Report ...${style.cyan.close}`);
             const report = yield readFileAndApplyStyle(inputs.reportingTxtFile, style.bold.open, style.bold.close);
             core.info(report);
+            if (errors.status === true) {
+                throw errors.message;
+            }
         }
         catch (error) {
             core.setFailed(error.message);

@@ -116,11 +116,19 @@ async function run(): Promise<void> {
       commandOptions.push('--no-deps')
     }
 
+    type customError = {
+      message: string
+      status: boolean
+    }
+
+    const errors: customError = { message: '', status: false }
+
     await core.group('Running the license checker...', async () => {
       try {
         await exec.exec(`"${liccheckPath}"`, commandOptions)
       } catch (error) {
-        core.info('Logging report...')
+        errors.message = error.message
+        errors.status = true
       }
     })
     core.info(`${style.cyan.open}License Checker Report ...${style.cyan.close}`)
@@ -130,6 +138,9 @@ async function run(): Promise<void> {
       style.bold.close
     )
     core.info(report)
+    if (errors.status === true) {
+      throw errors.message
+    }
   } catch (error) {
     core.setFailed(error.message)
   }
