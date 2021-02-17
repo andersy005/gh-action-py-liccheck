@@ -49,6 +49,7 @@ async function readFileAndApplyStyle(
 async function run(): Promise<void> {
   try {
     const inputs = await core.group('Gathering Inputs...', parseInputs)
+    const version = '0.4.9'
 
     const PythonPath: string = await core.group(
       'Getting python executable path ...',
@@ -62,7 +63,12 @@ async function run(): Promise<void> {
     )
 
     await core.group('Installing liccheck...', async () => {
-      await exec.exec(`"${PythonPath}"`, ['-m', 'pip', 'install', 'liccheck'])
+      await exec.exec(`"${PythonPath}"`, [
+        '-m',
+        'pip',
+        'install',
+        `liccheck==${version}`,
+      ])
     })
 
     const liccheckPath: string = await core.group(
@@ -140,7 +146,7 @@ async function run(): Promise<void> {
     core.info(report)
     if (errors.status === true) {
       core.setFailed(
-        `${errors.message}. Found incompatible and/or unknown licenses. ${style.bold.open}For more information, check the 'Running the license checker...' and 'License checker report' sections..${style.bold.close}`
+        `${errors.message}. ${style.bold.open}Found incompatible and/or unknown licenses. For more information, check the 'Running the license checker' and 'License checker report' sections.${style.bold.close}`
       )
     }
   } catch (error) {

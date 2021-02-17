@@ -5,7 +5,8 @@
     - [Basic](#basic)
     - [With custom locations for strategy and requirements files](#with-custom-locations-for-strategy-and-requirements-files)
   - [Arguments](#arguments)
-    - [Example strategy files](#example-strategy-files)
+  - [How `liccheck` works](#how-liccheck-works)
+  - [Example strategy files](#example-strategy-files)
   - [Contributing](#contributing)
   - [License](#license)
 
@@ -44,18 +45,31 @@ These inputs, along with their descriptions and usage contexts, are listed in th
 
 |          Input          |                                                                                                  Description                                                                                                   |  Usage   |      Default       |
 | :---------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------: | :----------------: |
-|   `strategy-ini-file`   |                                                                          Path to a strategy ini file or a pyproject.toml file to use.                                                                          | Optional |  `pyproject.toml`  |
+|   `strategy-ini-file`   |                                                  Path to a strategy ini file or a pyproject.toml file to use. See [examples](#example-strategy-files) below.                                                   | Optional |  `pyproject.toml`  |
 | `requirements-txt-file` |                                                                                    Path to a requirements.txt file to use.                                                                                     | Optional | `requirements.txt` |
 |        `no-deps`        |                                                                                     Whether **not** to check dependencies.                                                                                     | Optional |      `false`       |
 |         `level`         | Level for testing compliance of packages, where: `standard` - At least one authorized license (default); `cautious` - Per standard but no unauthorized licenses; `paranoid` - All licenses must be authorized. | Optional |     `standard`     |
 
-### Example strategy files
+## How `liccheck` works
+
+`liccheck` verifies compliance of packages defined in a `requirements.txt` file against a strategy defined in either a `pyproject.toml` or `.ini` file. To use this GitHub action, you have to define the following three items in your strategy file:
+
+- authorized license list
+- unauthorized license list
+- authorized package list (optional)
+
+**NOTE:** The packages from your `requirements.txt` need to all be installed in a Python environment prior to using this GitHub action.
+
+## Example strategy files
+
+Here are some examples showcasing how to define a strategy in both `pyproject.toml` and `.ini` files:
 
 <details>
 <summary>Example pyproject.toml</summary>
 
 ```toml
 [tool.liccheck]
+# Authorized and unauthorized licenses in LOWER CASE
 authorized_licenses = [
         "bsd",
         "new bsd",

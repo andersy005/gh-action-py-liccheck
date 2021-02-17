@@ -1,4 +1,5 @@
 [tool.liccheck]
+# Authorized and unauthorized licenses in LOWER CASE
 authorized_licenses = [
         "bsd",
         "new bsd",

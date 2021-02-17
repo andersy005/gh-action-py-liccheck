@@ -80,13 +80,19 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const inputs = yield core.group('Gathering Inputs...', parseInputs);
+            const version = '0.4.9';
             const PythonPath = yield core.group('Getting python executable path ...', () => __awaiter(this, void 0, void 0, function* () {
                 const pythonExe = yield io.which('python', true);
                 core.info(`${style.cyan.open}Python path: ${pythonExe}${style.cyan.close}`);
                 return pythonExe;
             }));
             yield core.group('Installing liccheck...', () => __awaiter(this, void 0, void 0, function* () {
-                yield exec.exec(`"${PythonPath}"`, ['-m', 'pip', 'install', 'liccheck']);
+                yield exec.exec(`"${PythonPath}"`, [
+                    '-m',
+                    'pip',
+                    'install',
+                    `liccheck==${version}`,
+                ]);
             }));
             const liccheckPath = yield core.group('Getting liccheck executable path ...', () => __awaiter(this, void 0, void 0, function* () {
                 const liccheckExe = yield io.which('liccheck', true);
@@ -132,7 +138,7 @@ function run() {
             const report = yield readFileAndApplyStyle(inputs.reportingTxtFile, style.bold.open, style.bold.close);
             core.info(report);
             if (errors.status === true) {
-                core.setFailed(`${errors.message}. Found incompatible and/or unknown licenses. ${style.bold.open}For more information, check the 'Running the license checker...' and 'License checker report' sections..${style.bold.close}`);
+                core.setFailed(`${errors.message}. ${style.bold.open}Found incompatible and/or unknown licenses. For more information, check the 'Running the license checker' and 'License checker report' sections.${style.bold.close}`);
             }
         }
         catch (error) {
