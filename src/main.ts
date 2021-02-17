@@ -140,8 +140,8 @@ async function run(): Promise<void> {
     core.info(report)
     if (errors.status === true) {
       core.setFailed(
-        `License checker failed: ${errors.message}. Found incompatible and/or unknown licenses.
-        \n${style.bold.open}Check the 'Running the license checker...' section for more information..${style.bold.close}`
+        `${errors.message}. Found incompatible and/or unknown licenses.
+        ${style.bold.open}For more information, check the 'Running the license checker...' and 'License checker report' sections..${style.bold.close}`
       )
     }
   } catch (error) {
