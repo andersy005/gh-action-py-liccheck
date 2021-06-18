@@ -3,6 +3,8 @@ import * as exec from '@actions/exec'
 import * as io from '@actions/io'
 import * as fs from 'fs'
 import * as style from 'ansi-styles'
+// eslint-disable-next-line no-undef
+import ErrnoException = NodeJS.ErrnoException
 
 export interface IActionInputs {
   readonly strategyIniFile: string
@@ -107,6 +109,10 @@ async function run(): Promise<void> {
       commandOptions.push(...['-s', inputs.strategyIniFile])
     }
 
+    if (!pathExists(inputs.reportingTxtFile)) {
+      createFile(inputs.reportingTxtFile)
+    }
+
     commandOptions.push(
       ...[
         '-r',
@@ -152,6 +158,27 @@ async function run(): Promise<void> {
   } catch (error) {
     core.setFailed(error.message)
   }
+}
+
+function pathExists(path: string): boolean {
+  let returnVal = false
+  fs.stat(path, (exists: ErrnoException | null) => {
+    if (exists == null) {
+      returnVal = true
+    } else if (exists.code === 'ENOENT') {
+      core.info(`${path} was not found...`)
+      returnVal = false
+    }
+  })
+  return returnVal
+}
+
+function createFile(path: string): void {
+  fs.writeFile(path, '', (err: ErrnoException | null) => {
+    if (!err) {
+      core.info(`Creating ${path}...`)
+    }
+  })
 }
 
 run()
