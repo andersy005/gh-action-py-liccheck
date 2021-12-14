@@ -2,7 +2,7 @@ import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as io from '@actions/io'
 import * as fs from 'fs'
-import * as style from 'ansi-styles'
+import styles from 'ansi-styles'
 // eslint-disable-next-line no-undef
 import ErrnoException = NodeJS.ErrnoException
 
@@ -59,7 +59,7 @@ async function run(): Promise<void> {
       async () => {
         const pythonExe: string = await io.which('python', true)
         core.info(
-          `${style.cyan.open}Python path: ${pythonExe}${style.cyan.close}`
+          `${styles.cyan.open}Python path: ${pythonExe}${styles.cyan.close}`
         )
         return pythonExe
       }
@@ -79,18 +79,18 @@ async function run(): Promise<void> {
       async () => {
         const liccheckExe: string = await io.which('liccheck', true)
         core.info(
-          `${style.cyan.open}liccheck path: ${liccheckExe}${style.cyan.close}`
+          `${styles.cyan.open}liccheck path: ${liccheckExe}${styles.cyan.close}`
         )
         return liccheckExe
       }
     )
 
     await core.group('Strategy to use...', async () => {
-      core.info(typeof style.bold)
+      core.info(typeof styles.bold)
       const strategy = await readFileAndApplyStyle(
         inputs.strategyIniFile,
-        style.bold.open,
-        style.bold.close
+        styles.bold.open,
+        styles.bold.close
       )
       core.info(strategy)
     })
@@ -98,8 +98,8 @@ async function run(): Promise<void> {
     await core.group('Checking licenses for ...', async () => {
       const requirements = await readFileAndApplyStyle(
         inputs.requirementsTxtFile,
-        style.bold.open,
-        style.bold.close
+        styles.bold.open,
+        styles.bold.close
       )
       core.info(requirements)
     })
@@ -144,16 +144,18 @@ async function run(): Promise<void> {
         errors.status = true
       }
     })
-    core.info(`${style.cyan.open}License Checker Report ...${style.cyan.close}`)
+    core.info(
+      `${styles.cyan.open}License Checker Report ...${styles.cyan.close}`
+    )
     const report = await readFileAndApplyStyle(
       inputs.reportingTxtFile,
-      style.bold.open,
-      style.bold.close
+      styles.bold.open,
+      styles.bold.close
     )
     core.info(report)
     if (errors.status === true) {
       core.setFailed(
-        `${errors.message}. ${style.bold.open}Found incompatible and/or unknown licenses. For more information, check the 'Running the license checker' and 'License checker report' sections.${style.bold.close}`
+        `${errors.message}. ${styles.bold.open}Found incompatible and/or unknown licenses. For more information, check the 'Running the license checker' and 'License checker report' sections.${styles.bold.close}`
       )
     }
   } catch (error) {
