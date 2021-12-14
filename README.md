@@ -70,6 +70,7 @@ These inputs, along with their descriptions and usage contexts, are listed in th
 |        `no-deps`        |                                                                                     Whether **not** to check dependencies.                                                                                     | Optional |      `false`       |
 |         `level`         | Level for testing compliance of packages, where: `standard` - At least one authorized license (default); `cautious` - Per standard but no unauthorized licenses; `paranoid` - All licenses must be authorized. | Optional |     `standard`     |
 |   `liccheck-version`    |                                                                                       Set the liccheck package version.                                                                                        | Optional |      `0.6.4`       |
+
 ## How `liccheck` works
 
 `liccheck` verifies compliance of packages defined in a `requirements.txt` file against a strategy defined in either a `pyproject.toml` or `.ini` file. To use this GitHub action, you have to define the following three items in your strategy file:
