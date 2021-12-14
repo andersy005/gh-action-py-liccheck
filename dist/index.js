@@ -51,6 +51,7 @@ function parseInputs() {
                 requirementsTxtFile: core.getInput('requirements-txt-file'),
                 reportingTxtFile: core.getInput('reporting-txt-file'),
                 noDeps: core.getInput('no-deps'),
+                liccheckVersion: core.getInput('liccheck-version'),
             });
             return inputs;
         }
@@ -80,7 +81,6 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const inputs = yield core.group('Gathering Inputs...', parseInputs);
-            const version = '0.4.9';
             const PythonPath = yield core.group('Getting python executable path ...', () => __awaiter(this, void 0, void 0, function* () {
                 const pythonExe = yield io.which('python', true);
                 core.info(`${style.cyan.open}Python path: ${pythonExe}${style.cyan.close}`);
@@ -91,7 +91,7 @@ function run() {
                     '-m',
                     'pip',
                     'install',
-                    `liccheck==${version}`,
+                    `liccheck==${inputs.liccheckVersion}`,
                 ]);
             }));
             const liccheckPath = yield core.group('Getting liccheck executable path ...', () => __awaiter(this, void 0, void 0, function* () {
@@ -112,6 +112,9 @@ function run() {
             const tomls = ['pyproject.toml', './pyproject.toml'];
             if (!tomls.includes(inputs.strategyIniFile)) {
                 commandOptions.push(...['-s', inputs.strategyIniFile]);
+            }
+            if (!pathExists(inputs.reportingTxtFile)) {
+                createFile(inputs.reportingTxtFile);
             }
             commandOptions.push(...[
                 '-r',
@@ -143,6 +146,26 @@ function run() {
         }
         catch (error) {
             core.setFailed(error.message);
+        }
+    });
+}
+function pathExists(path) {
+    let returnVal = false;
+    fs.stat(path, (exists) => {
+        if (exists == null) {
+            returnVal = true;
+        }
+        else if (exists.code === 'ENOENT') {
+            core.info(`${path} was not found...`);
+            returnVal = false;
+        }
+    });
+    return returnVal;
+}
+function createFile(path) {
+    fs.writeFile(path, '', (err) => {
+        if (!err) {
+            core.info(`Creating ${path}...`);
         }
     });
 }

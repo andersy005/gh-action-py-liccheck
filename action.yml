@@ -21,6 +21,10 @@ inputs:
   no-deps:
     description: Whether not to check dependencies.
     required: false
+  liccheck-version:
+    description: Set the liccheck package version.
+    required: false
+    default: 0.6.4
 
 runs:
   using: 'node12'

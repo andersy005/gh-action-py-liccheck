@@ -36,6 +36,7 @@ The basic usage uses the default values defined in table below. Therefore, as a 
     level: standard
     requirements-txt-file: ./my-requirements.txt
     no-deps: true
+    liccheck-version: 0.6.4
 ```
 
 ## GitHub action outcomes
@@ -68,6 +69,7 @@ These inputs, along with their descriptions and usage contexts, are listed in th
 | `requirements-txt-file` |                                                                                    Path to a requirements.txt file to use.                                                                                     | Optional | `requirements.txt` |
 |        `no-deps`        |                                                                                     Whether **not** to check dependencies.                                                                                     | Optional |      `false`       |
 |         `level`         | Level for testing compliance of packages, where: `standard` - At least one authorized license (default); `cautious` - Per standard but no unauthorized licenses; `paranoid` - All licenses must be authorized. | Optional |     `standard`     |
+|   `liccheck-version`    |                                                                                       Set the liccheck package version.                                                                                        | Optional |      `0.6.4`       |
 
 ## How `liccheck` works
 
