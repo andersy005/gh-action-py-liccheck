@@ -1,3 +1,5 @@
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/andersy005/gh-action-py-liccheck/main.svg)](https://results.pre-commit.ci/latest/github/andersy005/gh-action-py-liccheck/main)
+
 # `andersy005/gh-action-py-liccheck`
 
 - [`andersy005/gh-action-py-liccheck`](#andersy005gh-action-py-liccheck)
