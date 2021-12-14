@@ -12,6 +12,7 @@ export interface IActionInputs {
   readonly requirementsTxtFile: string
   readonly reportingTxtFile: string
   readonly noDeps: string
+  readonly liccheckVersion: string
 }
 
 export async function parseInputs(): Promise<IActionInputs> {
@@ -22,6 +23,7 @@ export async function parseInputs(): Promise<IActionInputs> {
       requirementsTxtFile: core.getInput('requirements-txt-file'),
       reportingTxtFile: core.getInput('reporting-txt-file'),
       noDeps: core.getInput('no-deps'),
+      liccheckVersion: core.getInput('liccheck-version'),
     })
     return inputs
   } catch (error) {
@@ -51,7 +53,6 @@ async function readFileAndApplyStyle(
 async function run(): Promise<void> {
   try {
     const inputs = await core.group('Gathering Inputs...', parseInputs)
-    const version = '0.4.9'
 
     const PythonPath: string = await core.group(
       'Getting python executable path ...',
@@ -69,7 +70,7 @@ async function run(): Promise<void> {
         '-m',
         'pip',
         'install',
-        `liccheck==${version}`,
+        `liccheck==${inputs.liccheckVersion}`,
       ])
     })
 
