@@ -33,7 +33,7 @@
   "homepage": "https://github.com/andersy005/gh-action-py-licensed#readme",
   "dependencies": {
     "@actions/core": "^1.6.0",
-    "@actions/exec": "^1.0.4",
+    "@actions/exec": "^1.1.0",
     "@actions/io": "^1.1.1",
     "ansi-styles": "^6.1.0"
   },
