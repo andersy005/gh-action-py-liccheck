@@ -1,7 +1,8 @@
+/* eslint-disable i18n-text/no-en */
 import * as core from '@actions/core'
 import * as exec from '@actions/exec'
-import * as io from '@actions/io'
 import * as fs from 'fs'
+import * as io from '@actions/io'
 import styles from 'ansi-styles'
 // eslint-disable-next-line no-undef
 import ErrnoException = NodeJS.ErrnoException
