@@ -1,5 +1,10 @@
 {
-  "plugins": ["jest", "@typescript-eslint", "sort-imports-es6-autofix"],
+  "plugins": [
+    "jest",
+    "@typescript-eslint",
+    "sort-imports-es6-autofix",
+    "i18n-text"
+  ],
   "extends": ["plugin:github/recommended", "plugin:jest/recommended"],
 
   "env": {
@@ -14,6 +19,7 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    "i18n-text/no-en": 2,
     "sort-imports-es6-autofix/sort-imports-es6": [
       2,
       {
