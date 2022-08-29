@@ -45,7 +45,7 @@
     "eslint": "^8.22.0",
     "eslint-plugin-github": "^4.3.7",
     "eslint-plugin-i18n-text": "^1.0.1",
-    "eslint-plugin-jest": "^26.8.7",
+    "eslint-plugin-jest": "^27.0.1",
     "eslint-plugin-sort-imports-es6-autofix": "^0.6.0",
     "jest": "^27.5.1",
     "jest-circus": "^29.0.1",
