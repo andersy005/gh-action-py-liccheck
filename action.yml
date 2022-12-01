@@ -27,7 +27,7 @@ inputs:
     default: 0.6.4
 
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
 
 branding:
