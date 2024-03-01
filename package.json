@@ -6,12 +6,9 @@
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
-    "format": "prettier --write **/*.ts",
-    "format-check": "prettier --check **/*.ts",
-    "lint": "eslint --fix src/**/*.ts",
     "package": "ncc build --source-map --license licenses.txt",
     "test": "echo no tests.",
-    "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
+    "all": "npm run build && npm run package && npm test"
   },
   "repository": {
     "type": "git",
