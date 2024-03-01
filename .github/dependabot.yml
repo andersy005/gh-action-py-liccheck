@@ -5,9 +5,17 @@ updates:
     schedule:
       # Check for updates once a week
       interval: 'monthly'
+    groups:
+      actions:
+        patterns:
+          - '*'
 
     # Maintain dependencies for npm
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
       interval: 'monthly'
+    groups:
+      dependencies:
+        patterns:
+          - '*'
