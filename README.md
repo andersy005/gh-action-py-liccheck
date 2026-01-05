@@ -1,3 +1,5 @@
+> ⚠️ THIS REPOSITORY IS ARCHIVED — read-only (archived on 2026-01-05). It is no longer maintained
+
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/andersy005/gh-action-py-liccheck/main.svg)](https://results.pre-commit.ci/latest/github/andersy005/gh-action-py-liccheck/main)
 
 # `andersy005/gh-action-py-liccheck`
